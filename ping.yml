@@ -4,4 +4,4 @@
     hosts: wordpress
     tasks:
     - name: ping
-      ping: 
+      ping:
