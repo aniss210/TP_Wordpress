@@ -1,77 +1,73 @@
 ---
-
-- name: Installation Wordpress
+- name: Installation de wordpress
   become: true
   hosts: wordpress
   tasks:
-# PHP
-- name: Add the ondrej PHP PPA
-  apt_repository:
-  repo: 'ppa:ondrej/php'
-  ignore_errors: true
-
-- name: Install PHP
-  package:
-  name: "{{ item }}"
-  state: present
-  loop:
-      - php
-      - php-fpm
-      - php-mysql
-      - php-xml
-
-- name: Remove apache2
-  package:
-  name: apache2
-  state: absent
-
-- name: Install MySQL
-  package:
-  name: "{{ item }}"
-  state: present
-  loop:
+#PHP
+    - name: ADD the ondrej PHP PPA
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+      ignore_errors: true
+    - name: Install php
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+       - php
+       - php-fpm
+       - php-mysql
+       - php-xml
+    - name: Remove apache
+      package:
+        name: apache2
+        state: absent
+#MySQL
+    - name: Install MySQL
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
         - mysql-server
         - python3-mysqldb
 
-- name: Generate new root password
-  command: openssl rand -hex 7
-  args:
-  creates: /root/.my.cnf
-  register: mysql_new_root_pass
+    - name: Generate new root password
+      command: openssl rand -hex 7
+      args:
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
 
-- name: Remove anonymous users
-  mysql_user:
-  name: ""
-  state: absent
-  when: mysql_new_root_pass.changed
+    - name: Remove anonymous users
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
 
-- name: Remove test database
-  mysql_db:
-  name: test
-  state: absent
-  when: mysql_new_root_pass.changed
+    - name: Remove test database
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
 
-- name: Output new root password
-  debug:
-  msg: "New root password is {{mysql_new_root_pass.stdout}}"
-  when: mysql_new_root_pass.changed
+    - name: Output new root password
+      debug:
+        msg: "New root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
 
-- name: Update root password
-  mysql_user:
-  name: root
-  host: "{{ item }}"
-  password: "{{ mysql_new_root_pass.stdout }}"
-  loop:
+    - name: Update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_new_root_pass.stdout }}"
+      loop:
         - "{{ ansible_hostname }}"
         - 127.0.0.1
         - ::1
         - localhost
-  when: mysql_new_root_pass.changed
+      when: mysql_new_root_pass.changed
 
-- name: Create my.cnf
-  template:
-  src: templates/mysql/my.cnf.j2
-  dest: /root/.my.cnf
-  when: mysql_new_root_pass.changed
-
-      ---
+    - name: Create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+...
