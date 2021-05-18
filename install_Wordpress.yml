@@ -111,7 +111,7 @@
 
 
 
-    - name: Intall unzip package
+    - name: Install unzip package
       package:
        name: unzip
        state: present
