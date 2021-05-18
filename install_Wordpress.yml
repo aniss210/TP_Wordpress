@@ -120,7 +120,7 @@
     - name: Unzip Wordpress
       unarchive:
         src: /tmp/wordpress.zip
-        dest: /tmp
+        dest: /tmp/www
         remote_src: yes
         creates: /tmp/wordpress/wp-settings.php
 
