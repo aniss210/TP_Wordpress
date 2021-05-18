@@ -82,8 +82,8 @@
         state: started
 
     - name: create nginx config
-       template:
+      template:
         src: templates/nginx/default.j2
         dest: /etc/nginx/sites-available/default
-      
+
 ...
