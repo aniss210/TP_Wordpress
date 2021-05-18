@@ -139,6 +139,13 @@
         password: bananas
         priv: wordpress.*:ALL
 
+    - name: create wordpress config
+      template:
+        src: templates/wordpress/wp-config.php.j2
+        dest: /var/www/wordpress/wp-config.php
+
+
+
 
 #HANDLERS
   handlers:
