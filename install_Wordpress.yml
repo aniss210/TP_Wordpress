@@ -126,11 +126,10 @@
 
 
 #creation BDD MySQL
-
     - name: Create Wordpress MySQL database
       mysql_db:
-       name: wordpress
-       state: present
+        name: wordpress
+        state: present
 
 
 
