@@ -86,6 +86,14 @@
         src: templates/nginx/default.j2
         dest: /etc/nginx/sites-available/default
       notify: restart nginx
+
+    - name: Create project folder
+      file:
+        path: /var/www/book.example.com
+        state: directory
+
+
+
 #HANDLERS
   handlers:
     - name: restart nginx
