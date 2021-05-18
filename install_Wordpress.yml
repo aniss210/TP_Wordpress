@@ -134,10 +134,10 @@
 
     - name: Create WordPress mysql
        mysql_user:
-       name: WordPress
-       host: localhost
-       password: bananas
-       priv: wordpress.*:ALL
+         name: WordPress
+         host: localhost
+         password: bananas
+         priv: wordpress.*:ALL
 
 
 #HANDLERS
