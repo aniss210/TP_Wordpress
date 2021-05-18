@@ -3,6 +3,8 @@
   become: true
   hosts: wordpress
   tasks:
+
+
 #PHP
     - name: ADD the ondrej PHP PPA
       apt_repository:
@@ -106,6 +108,14 @@
        url: https://wordpress.org/latest.zip
        dest: /tmp/wordpress.zip
        checksum: "sha1:{{wp_checksum.content}}"
+
+
+
+    - name: Intall unzip package
+      package:
+       name: unzip
+       state: present
+
 
     - name: Unzip Wordpress
       unarchive:
