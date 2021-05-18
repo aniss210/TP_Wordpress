@@ -98,7 +98,7 @@
       uri:
        url: https://wordpress.org/latest.zip.sha1
        return_content: true
-       register: wp_checksum
+      register: wp_checksum
 
 
 
