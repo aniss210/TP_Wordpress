@@ -132,7 +132,6 @@
         state: present
 
 
-
     - name: Create WordPress mysql
        mysql_user:
        name: WordPress
