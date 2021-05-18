@@ -108,14 +108,12 @@
         dest: /tmp/wordpress.zip
         checksum: "sha1:{{wp_checksum.content}}"
 
-
-
 #HANDLERS
   handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
+     - name: restart nginx
+       service:
+         name: nginx
+         state: restarted
 
 
 ...
